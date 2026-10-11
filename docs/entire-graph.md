@@ -20,16 +20,25 @@ entire graph impact --symbol adjudicate
 
 ## Snapshot (sanitized)
 
-If the Entire CLI is not on PATH in this environment, this file still documents the intended graph. A captured snippet from `entire graph search` should be pasted below when the CLI is available:
+Captured locally on 2026-10-11 with Entire CLI 0.11.4 and entire-graph v0.4.0.
 
 ```text
-pending: run `entire graph search --repo . --query "job brief pipeline stages"`
-key symbols expected:
-  - src.pipeline.run_brief
-  - src.adjudicate.verdict.adjudicate
-  - src.verify.citations.verify_evidence
-  - src.research.worker.research_question
-  - src.tracing.init_tracing
+entire graph doctor --json:
+  provider: entire-graph
+  version: v0.4.0
+  no_egress: true
+  partial_failures: 0
+
+entire graph snapshot --repo . --format ndjson:
+  files: 39
+  parsed_files: 39
+  symbols: 145
+  relations: 586
+  completeness: ok
+
+entire graph search --repo . --query "job brief pipeline stages":
+  top result: src/pipeline.py:19-89 (run_brief)
+  related symbols: ingest, planner, research, adjudicate, synthesize, verify
 ```
 
 Do not paste secrets, `.env`, or private checkpoint payloads.
