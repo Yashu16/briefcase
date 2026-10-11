@@ -42,7 +42,7 @@ Yaswanth (solo unless additional handles are added here).
 - First `job-brief` trace: local capture completed; dashboard trace pending until the LiteLLM endpoint is corrected
 - A/B traces (with vs without priors): run artifacts captured; dashboard latency/token/cost fields still pending
 - Failure/recovery trace: captured in `runs/recovery-fetch/` with `fetch_retry`; dashboard link still pending
-- Entire enabled locally with CLI 0.11.4 and graph plugin v0.4.0. Graph doctor passed with `no_egress=true`; snapshot indexed 39 files, 145 symbols, and 586 relations with zero partial failures. See `docs/entire-graph.md`.
+- Entire enabled locally with CLI 0.11.4 and graph plugin v0.4.0. Graph doctor passed with `no_egress=true`; snapshot indexed 39 files, 145 symbols, and 586 relations with zero partial failures. `entire checkpoint list` reports zero checkpoints because the installed integration is Claude Code while this session runs through Copilot SDK; this limitation is recorded rather than presenting a fabricated checkpoint ID. See `docs/entire-graph.md`.
 - cfo.ai model export: see `docs/business-plan.md` (assumptions; replace with Ari screenshots when credits apply)
 
 ## Demo
