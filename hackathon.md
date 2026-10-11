@@ -34,6 +34,7 @@ Yaswanth (solo unless additional handles are added here).
 - Verification on 2026-10-10: corrected LiteLLM endpoint/model returned HTTP 200 for all three model calls in the live fixture run. The run wrote `runs/live-sonnet/` and produced 19 verdicts with 4 unverified claims.
 - A/B evidence on the same fixture: `runs/ab-with-priors/` produced 18 verdicts and 5 unverified claims; `runs/ab-without-priors/` produced 14 verdicts and 4 unverified claims. Both used the live LiteLLM endpoint and completed successfully.
 - Failure/recovery evidence: `runs/recovery-fetch/` recorded `fetch_retry` after the forced first fetch failure, then completed with 8 verdicts and 0 unverified claims.
+- Verification on 2026-10-11: Crustdata required the dashboard-compatible `apikey` header plus `Authorization: Bearer <API key>`. A direct enrichment check returned one record, and the full live run completed with 27 verdicts and 4 unverified claims.
 
 **Evidence (fill after live runs — do not fabricate dashboard URLs):**
 
