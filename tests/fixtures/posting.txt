@@ -1,0 +1,11 @@
+Title: Senior Software Engineer
+Company: Stripe
+Location: New York, NY (hybrid)
+
+About the role
+We are hiring a Senior Software Engineer to build payments infrastructure.
+
+Requirements
+- 5+ years of production Python or Go
+- Experience with distributed systems
+- Strong written communication
