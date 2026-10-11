@@ -29,6 +29,7 @@ def enrich_company(company: str, domain: str | None = None) -> dict[str, Any] | 
                     "Authorization": f"Bearer {settings.crustdata_api_key}",
                     "Content-Type": "application/json",
                     "x-api-version": settings.crustdata_api_version,
+                    "Authorization": settings.crustdata_api_key,
                 },
                 json=body,
             )

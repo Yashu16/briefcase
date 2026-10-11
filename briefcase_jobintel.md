@@ -13,7 +13,7 @@ todos:
     status: completed
   - id: judge-evidence
     content: A/B prior traces, failure/recovery trace, Entire checkpoints + graph dump, cfo.ai docs/business-plan.md
-    status: pending
+    status: in_progress
   - id: demo-submit
     content: "README, video script, tests, public posts #neatHack, X quote submission when window opens"
     status: pending

@@ -29,11 +29,13 @@ Yaswanth (solo unless additional handles are added here).
 - Tests: parser heuristic, adjudication priors, 404 citation flag, offline golden brief.
 - Verification on 2026-10-10: `.venv\Scripts\python.exe -m pytest -q` passed (5 tests).
 - Verification on 2026-10-10: offline CLI produced a cited brief from `tests\fixtures\posting.txt`; neatlogs local doctor passed with 4 captured diagnostic spans.
+- Verification on 2026-10-10: credentialed fixture run completed with `21` verdicts and `7` unverified claims. LiteLLM returned HTTP 404 for the configured endpoint, and Crustdata returned HTTP 401; both paths degraded to documented fallbacks without exposing credentials.
+- Fixed the Crustdata response-shape boundary so its documented top-level list response is handled correctly, and wired the local API key into the request header. The live fallback run passed afterward.
 
 **Evidence (fill after live runs — do not fabricate dashboard URLs):**
 
 - neatlogs doctor: pending until `NEATLOGS_API_KEY` is in `.env`
-- First `job-brief` trace: pending
+- First `job-brief` trace: local capture completed; dashboard trace pending until the LiteLLM endpoint is corrected
 - A/B traces (with vs without priors): pending — record latency, tokens, cost, unverified-claim count
 - Failure/recovery trace: pending (`--force-fetch-fail`)
 - Entire checkpoint IDs: pending

@@ -30,7 +30,7 @@ def research_question(
         )
     if question.topic in {Topic.company, Topic.sponsorship, Topic.comp} or question.id == "q1":
         payload = enrich_company(posting.company, posting.company_domain)
-        if payload and not payload.get("_error"):
+        if payload and not (isinstance(payload, dict) and payload.get("_error")):
             for row in evidence_from_enrichment(payload, question.id):
                 evidence.append(
                     Evidence(
@@ -42,7 +42,7 @@ def research_question(
                         question_id=question.id,
                     )
                 )
-        elif payload and payload.get("_error"):
+        elif isinstance(payload, dict) and payload.get("_error"):
             evidence.append(
                 Evidence(
                     claim=f"Crustdata unavailable ({payload.get('_error')}); continuing with web sources only.",
