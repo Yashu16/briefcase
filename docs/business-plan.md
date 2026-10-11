@@ -1,6 +1,6 @@
 # Briefcase unit economics (cfo.ai)
 
-Modeled as **one API call = one brief**. Numbers below are a founder-ready starting model for Ari / cfo.ai. Replace token and Crustdata rows with the first live neatlogs trace once keys are in `.env`. Do not treat these as measured dashboard figures until a trace is pasted here.
+Modeled as **one API call = one brief**. The assumptions and sensitivity outputs below were exported from cfo.ai on 2026-10-11. Engineering costs remain modeled estimates, not measured billing data.
 
 Hackathon note: if you sign up at cfo.ai with a card, cancel immediately in Settings → Billing. neatHack credits come from the event team.
 
@@ -53,8 +53,27 @@ At Base MRR $3,080 and $170 opex + $1,100 COGS, contribution is positive. Seed c
 4. Scenarios Conservative / Base / Growth as above
 5. Ask Ari: “Show cash runway if Pro conversion is 5% vs 10% and Crustdata cost doubles.”
 
-Paste Ari’s table/export below when available.
+## cfo.ai export summary
 
-### Ari export (pending)
+Workbook: `Briefcase — Runway & decisions.xlsx`
 
-_No live cfo.ai export in this file yet. Assumptions above are the model to type into Ari on Monday office hours if credits arrive late._
+The exported model uses three starting-cash views: bootstrapped `$0`, lean launch `$5,000`, and illustrative pre-seed `$25,000`. The `$25,000` value is hypothetical Briefcase business capital, not the builder’s personal cash or confirmed funding.
+
+| Scenario | MRR | Monthly briefs | COGS / brief | Monthly COGS | Gross profit | Gross margin | Monthly cash flow |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| Conservative | $760 | 1,200 | $0.22 | $264 | $496 | 65.3% | $326 |
+| Base | $3,080 | 5,000 | $0.22 | $1,100 | $1,980 | 64.3% | $1,810 |
+| Growth | $10,800 | 18,000 | $0.22 | $3,960 | $6,840 | 63.3% | $6,670 |
+
+Sensitivity results:
+
+- Base with 5% free-to-Pro conversion: `$1,940` MRR, `$840` gross profit, `43.3%` gross margin, `$670` monthly cash flow.
+- Base with doubled Crustdata cost (`$0.30` total modeled COGS/brief): `$3,080` MRR, `$1,580` gross profit, `51.3%` gross margin, `$1,410` monthly cash flow.
+- Base with both 5% conversion and doubled Crustdata cost: `$1,940` MRR, `$440` gross profit, `22.7%` gross margin, `$270` monthly cash flow.
+- Full Pro allowance stress test for the base scenario is negative `$2,018` monthly cash flow, showing why rendered totals are the main forecast and included usage is a capacity ceiling.
+
+The workbook provides the cfo.ai evidence for pricing, unit economics, sensitivity analysis, and runway planning. It does not establish actual funding, customer demand, or measured API billing.
+
+### Export status
+
+_A sanitized workbook export is now included at the repository root; no account, billing, or personal information is included._

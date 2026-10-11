@@ -6,7 +6,7 @@
 
 ## Team
 
-Yaswanth (solo unless additional handles are added here).
+Yaswanth (solo).
 
 ## Stack
 
@@ -43,7 +43,7 @@ Yaswanth (solo unless additional handles are added here).
 - A/B traces (with vs without priors): `runs/ab-with-priors/` and `runs/ab-without-priors/` captured; dashboard latency/token/cost fields pending
 - Failure/recovery trace: captured in `runs/recovery-fetch/` with `fetch_retry`; dashboard link pending
 - Entire graph evidence: captured and committed; GitHub repository mirrored in Entire at `aws-us-east-2`. Session checkpoint IDs remain pending because this session uses Copilot SDK rather than the configured Claude Code integration. See `docs/entire-graph.md`.
-- cfo.ai model export: see `docs/business-plan.md` (assumptions; replace with Ari screenshots when credits apply)
+- cfo.ai model export: sanitized workbook `Briefcase — Runway & decisions.xlsx` summarized in `docs/business-plan.md`; includes base, conservative, growth, 5% conversion, doubled-Crustdata, and full-allowance stress cases
 
 ## Demo
 
@@ -68,6 +68,6 @@ Confirmed from https://neatlogs.com/hackathon (as of 10 Oct 2026):
 - [ ] `#neatHack` build-in-public posts (drafts in `demo/build-in-public.md`)
 - [ ] neatlogs traces (A/B + recovery) linked or screenshotted
 - [ ] Entire checkpoints / entire-graph output in repo
-- [ ] cfo.ai business plan (pricing, costs, revenue, runway)
+- [x] cfo.ai business plan (pricing, costs, revenue, runway)
 
 Do not submit on the builder's behalf. Opening the X draft is not a submission.
