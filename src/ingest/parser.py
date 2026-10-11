@@ -1,5 +1,8 @@
 from __future__ import annotations
 
+import re
+from urllib.parse import parse_qs, unquote, urlparse
+
 from pydantic import BaseModel, Field
 
 from src.llm import complete_json
@@ -28,14 +31,21 @@ def parse_posting(text: str, raw_url: str | None = None) -> JobPosting:
         parsed = complete_json(SYSTEM, snippet, _ParsedPosting)
     except Exception:
         parsed = complete_json(SYSTEM, snippet[:4000], _ParsedPosting)
-    return JobPosting(
+    company, title, location = _repair_fields(
         company=parsed.company,
         title=parsed.title,
         location=parsed.location,
-        requirements=parsed.requirements,
+        text=text,
+        raw_url=raw_url,
+    )
+    return JobPosting(
+        company=company,
+        title=title,
+        location=location,
+        requirements=_clean_requirements(parsed.requirements),
         raw_url=raw_url,
         source_text=text[:20000],
-        company_domain=parsed.company_domain or None,
+        company_domain=parsed.company_domain or _company_domain(raw_url),
     )
 
 
@@ -53,11 +63,64 @@ def parse_posting_heuristic(text: str, raw_url: str | None = None) -> JobPosting
     for ln in lines:
         if ln.lower().startswith("location:"):
             location = ln.split(":", 1)[1].strip()
-    return JobPosting(
+    company, title, location = _repair_fields(
         company=company,
         title=title.replace("Title:", "").strip(),
         location=location,
-        requirements=reqs,
+        text=text,
+        raw_url=raw_url,
+    )
+    return JobPosting(
+        company=company,
+        title=title,
+        location=location,
+        requirements=_clean_requirements(reqs),
         raw_url=raw_url,
         source_text=text,
+        company_domain=_company_domain(raw_url),
     )
+
+
+def _repair_fields(
+    *,
+    company: str,
+    title: str,
+    location: str,
+    text: str,
+    raw_url: str | None,
+) -> tuple[str, str, str]:
+    """Repair fields when page chrome causes an otherwise useful parse to be incomplete."""
+    normalized_company = company.strip()
+    normalized_title = title.strip()
+    normalized_location = location.strip()
+    lowered_company = normalized_company.casefold()
+
+    if not normalized_company or lowered_company in {"unknown", "n/a", "none"}:
+        parsed_url = urlparse(raw_url or "")
+        host = parsed_url.netloc.casefold().removeprefix("www.")
+        if host == "google.com" and "/careers/" in parsed_url.path:
+            normalized_company = "Google"
+        else:
+            match = re.search(
+                r",\s*([A-Z][A-Za-z0-9&. -]+?)(?:\s+(?:Ads|Careers))?\s*$",
+                normalized_title,
+            )
+            if match:
+                normalized_company = match.group(1).strip()
+
+    if not normalized_location and raw_url:
+        location_values = parse_qs(urlparse(raw_url).query).get("location")
+        if location_values:
+            normalized_location = unquote(location_values[0]).replace("+", " ").strip()
+
+    return normalized_company or "Unknown", normalized_title, normalized_location
+
+
+def _company_domain(raw_url: str | None) -> str | None:
+    host = urlparse(raw_url or "").netloc.casefold().removeprefix("www.")
+    return host or None
+
+
+def _clean_requirements(requirements: list[str]) -> list[str]:
+    navigation_labels = {"linkcopy link", "emailemail a friend"}
+    return [item.strip() for item in requirements if item.strip().casefold() not in navigation_labels]

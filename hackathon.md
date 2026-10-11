@@ -36,6 +36,13 @@ Yaswanth (solo).
 - Failure/recovery evidence: `runs/recovery-fetch/` recorded `fetch_retry` after the forced first fetch failure, then completed with 8 verdicts and 0 unverified claims.
 - Verification on 2026-10-11: Crustdata required the dashboard-compatible `apikey` header plus `Authorization: Bearer <API key>`. A direct enrichment check returned one record, and the full live run completed with 27 verdicts and 4 unverified claims.
 
+### 2026-10-11 — Real Google Careers URL validation and parser repair
+
+- Tested a real Google Careers posting URL end to end with live fetching, LiteLLM, web research, Crustdata, and citation verification.
+- Found and fixed two ingestion issues: page navigation labels leaked into requirements, and an LLM JSON failure caused the fallback parser to label the company `Unknown`.
+- URL-aware fallback parsing now recovers `Google`, `United States`, and `google.com` from the Google Careers URL, filters the leaked navigation labels, and produced a cited brief for `Senior Software Engineer, Generative AI/Machine Learning, Google Ads at Google`.
+- Full suite after the fix: 7 tests passed.
+
 **Evidence (fill after live runs — do not fabricate dashboard URLs):**
 
 - neatlogs doctor: local diagnostic capture passed with `NEATLOGS_API_KEY` configured
