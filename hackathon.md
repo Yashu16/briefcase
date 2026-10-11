@@ -38,11 +38,11 @@ Yaswanth (solo unless additional handles are added here).
 
 **Evidence (fill after live runs — do not fabricate dashboard URLs):**
 
-- neatlogs doctor: pending until `NEATLOGS_API_KEY` is in `.env`
-- First `job-brief` trace: local capture completed; dashboard trace pending until the LiteLLM endpoint is corrected
-- A/B traces (with vs without priors): run artifacts captured; dashboard latency/token/cost fields still pending
-- Failure/recovery trace: captured in `runs/recovery-fetch/` with `fetch_retry`; dashboard link still pending
-- Entire enabled locally with CLI 0.11.4 and graph plugin v0.4.0. Graph doctor passed with `no_egress=true`; snapshot indexed 39 files, 145 symbols, and 586 relations with zero partial failures. `entire checkpoint list` reports zero checkpoints because the installed integration is Claude Code while this session runs through Copilot SDK; this limitation is recorded rather than presenting a fabricated checkpoint ID. See `docs/entire-graph.md`.
+- neatlogs doctor: local diagnostic capture passed with `NEATLOGS_API_KEY` configured
+- First `job-brief` trace: live LiteLLM and Crustdata run completed; dashboard trace URL pending
+- A/B traces (with vs without priors): `runs/ab-with-priors/` and `runs/ab-without-priors/` captured; dashboard latency/token/cost fields pending
+- Failure/recovery trace: captured in `runs/recovery-fetch/` with `fetch_retry`; dashboard link pending
+- Entire graph evidence: captured and committed; GitHub repository mirrored in Entire at `aws-us-east-2`. Session checkpoint IDs remain pending because this session uses Copilot SDK rather than the configured Claude Code integration. See `docs/entire-graph.md`.
 - cfo.ai model export: see `docs/business-plan.md` (assumptions; replace with Ari screenshots when credits apply)
 
 ## Demo
