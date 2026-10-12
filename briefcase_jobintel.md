@@ -116,7 +116,6 @@ Same as your blueprint, plus:
 - `hackathon.md` — neatHack build log (project, team, stack, dated evidence, demo, submission checklist)
 - `.agents/skills/neathack/SKILL.md` — from [neatlogs.com/hackathon/skill](https://neatlogs.com/hackathon/skill)
 - `runs/` gitignored except a sanitized sample
-- `demo/video-script.md` — 3-minute script covering all three tools
 
 Stack: Python 3.11+, `pydantic`, `openai`, `neatlogs`, `httpx`, `trafilatura`, `ddgs`, `python-dotenv`, pytest.
 

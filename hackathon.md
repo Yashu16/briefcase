@@ -69,7 +69,6 @@ Yaswanth (solo).
 
 ## Demo
 
-- Script: `demo/video-script.md` (≤3 minutes; covers neatlogs, Entire, cfo.ai)
 - Recorded demo video: [Google Drive](https://drive.google.com/file/d/1ytcZE7jDnrAHu9eQlAAM5m-hIwSo6-lr/view?usp=sharing)
 - Reproduce: `python -m src.main --text-file tests/fixtures/posting.txt --offline --out brief.md`
 - Live (keys required): `python -m src.main --url <posting> --out brief.md`
@@ -88,7 +87,7 @@ Confirmed from https://neatlogs.com/hackathon (as of 10 Oct 2026):
 - [x] Public repo with commits dated during the hackathon (once pushed)
 - [x] Demo video ≤3 min covering neatlogs, Entire, cfo.ai (architecture, implementation, runtime, reasoning, result) — [watch on Google Drive](https://drive.google.com/file/d/1ytcZE7jDnrAHu9eQlAAM5m-hIwSo6-lr/view?usp=sharing)
 - [ ] Quote the official neatlogs X post in the 12 Oct 19:00–23:55 IST window
-- [ ] `#neatHack` build-in-public posts (drafts in `demo/build-in-public.md`)
+- [ ] `#neatHack` build-in-public posts
 - [ ] neatlogs traces (A/B + recovery) linked or screenshotted
 - [ ] Entire checkpoints / entire-graph output in repo
 - [x] cfo.ai business plan (pricing, costs, revenue, runway)
