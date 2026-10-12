@@ -61,6 +61,8 @@ pytest -q
 
 See [`hackathon.md`](hackathon.md) for the evidence log and [`demo/video-script.md`](demo/video-script.md) for the ≤3 minute demo.
 
+Recorded demo: [Watch on Google Drive](https://drive.google.com/file/d/1ytcZE7jDnrAHu9eQlAAM5m-hIwSo6-lr/view?usp=sharing).
+
 ## License
 
 MIT — written during neatHack, 10–12 Oct 2026.
