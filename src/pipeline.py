@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import uuid
+from collections.abc import Callable
 from pathlib import Path
 
 from src.adjudicate.verdict import adjudicate
@@ -25,9 +26,11 @@ def run_brief(
     force_fetch_fail: bool = False,
     run_id: str | None = None,
     out_path: Path | None = None,
+    progress: Callable[[str], None] | None = None,
 ) -> PipelineState:
     state = PipelineState(run_id=run_id or uuid.uuid4().hex[:12], use_priors=use_priors)
 
+    _report(progress, "1/6 Ingesting job posting")
     if text:
         raw = text
         raw_url = url
@@ -46,6 +49,9 @@ def run_brief(
     else:
         raise ValueError("provide --url or --text / --text-file")
 
+    _report(progress, "1/6 Ingesting job posting ... OK")
+
+    _report(progress, "2/6 Parsing posting")
     if offline:
         posting = parse_posting_heuristic(raw, raw_url)
     else:
@@ -54,29 +60,36 @@ def run_brief(
         except Exception:
             posting = parse_posting_heuristic(raw, raw_url)
             state.recovered_from.append("parser_heuristic")
+    _report(progress, f"2/6 Parsing posting ... {posting.company} / {posting.title}")
     state.posting = posting
     save_artifact(state.run_id, "posting.json", posting)
     save_state(state)
 
+    _report(progress, "3/6 Planning research questions")
     if offline:
         questions = template_questions(posting)
     else:
         questions = decompose(posting)
     state.questions = questions
+    _report(progress, f"3/6 Planning research questions ... {len(questions)} questions")
     save_artifact(state.run_id, "questions.json", [q.model_dump() for q in questions])
     save_state(state)
 
+    _report(progress, "4/6 Researching evidence")
     if offline:
         evidence = _fixture_evidence(posting)
     else:
         evidence = research_all(posting, questions, use_priors=use_priors)
     state.evidence = evidence
+    _report(progress, f"4/6 Researching evidence ... {len(evidence)} findings")
     save_artifact(state.run_id, "evidence.json", [e.model_dump() for e in evidence])
     save_state(state)
 
+    _report(progress, "5/6 Adjudicating and verifying citations")
     live, unverified = (evidence, []) if offline else verify_evidence(evidence)
     verdicts = adjudicate(live, use_priors=use_priors)
     state.verdicts = verdicts
+    _report(progress, f"5/6 Adjudicating and verifying citations ... {len(verdicts)} verdicts, {len(unverified)} unverified")
     save_state(state)
 
     brief: Brief = synthesize(posting, verdicts, live, unverified)
@@ -86,7 +99,14 @@ def run_brief(
 
     if out_path:
         out_path.write_text(brief.markdown, encoding="utf-8")
+    output_label = str(out_path or Path("runs") / state.run_id / "brief.md")
+    _report(progress, f"6/6 Writing brief ... {output_label}")
     return state
+
+
+def _report(progress: Callable[[str], None] | None, message: str) -> None:
+    if progress:
+        progress(message)
 
 
 def _fixture_evidence(posting: JobPosting):

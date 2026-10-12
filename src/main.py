@@ -41,6 +41,7 @@ def cli(argv: list[str] | None = None) -> int:
             force_fetch_fail=args.force_fetch_fail,
             run_id=args.run_id,
             out_path=args.out,
+            progress=lambda message: print(message, flush=True),
         )
     except Exception as exc:  # noqa: BLE001
         logging.error("brief failed: %s", exc)

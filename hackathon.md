@@ -43,6 +43,13 @@ Yaswanth (solo).
 - URL-aware fallback parsing now recovers `Google`, `United States`, and `google.com` from the Google Careers URL, filters the leaked navigation labels, and produced a cited brief for `Senior Software Engineer, Generative AI/Machine Learning, Google Ads at Google`.
 - Full suite after the fix: 7 tests passed.
 
+### 2026-10-11 — Demo progress and readable evidence output
+
+- Added sentence-aware evidence shortening so long claims end at a complete sentence when possible, or use an explicit `...` at a word boundary.
+- Added six-stage CLI progress output covering ingest, parsing, planning, research, adjudication/citation verification, and brief writing.
+- HTTP request logs remain available for debugging, while the stage lines provide a concise demo-friendly summary.
+- Full suite after the change: 9 tests passed.
+
 **Evidence (fill after live runs — do not fabricate dashboard URLs):**
 
 - neatlogs doctor: local diagnostic capture passed with `NEATLOGS_API_KEY` configured

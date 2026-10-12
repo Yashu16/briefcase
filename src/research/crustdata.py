@@ -5,6 +5,7 @@ from typing import Any
 import httpx
 
 from src.config import get_settings
+from src.research.text import shorten_text
 from src.tracing import span
 
 CRUSTDATA_URL = "https://api.crustdata.com/company/enrich"
@@ -59,7 +60,7 @@ def evidence_from_enrichment(payload: Any, question_id: str) -> list[dict[str, s
             if desc:
                 rows.append(
                     {
-                        "claim": f"{name}: {desc[:280]}",
+                        "claim": shorten_text(f"{name}: {desc}", 280),
                         "url": str(url),
                         "name": "Crustdata",
                         "snippet": str(desc)[:500],
@@ -70,7 +71,7 @@ def evidence_from_enrichment(payload: Any, question_id: str) -> list[dict[str, s
             if funding:
                 rows.append(
                     {
-                        "claim": f"{name} funding snapshot: {str(funding)[:240]}",
+                        "claim": shorten_text(f"{name} funding snapshot: {funding}", 240),
                         "url": str(url),
                         "name": "Crustdata",
                         "snippet": str(funding)[:500],
