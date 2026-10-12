@@ -3,7 +3,7 @@ from __future__ import annotations
 from src.credibility import credibility_for_url
 from src.models import Evidence, JobPosting, ResearchQuestion, Topic
 from src.research.crustdata import enrich_company, evidence_from_enrichment
-from src.research.text import shorten_text
+from src.research.text import summarize_evidence
 from src.research.web_search import web_search
 from src.tracing import span
 
@@ -21,7 +21,7 @@ def research_question(
         url = hit["url"]
         evidence.append(
             Evidence(
-                claim=shorten_text(hit["snippet"], 280) or hit["title"],
+                claim=summarize_evidence(hit["snippet"], question.prompt) or hit["title"],
                 source_url=url,
                 source_name=hit["title"][:80],
                 snippet=hit["snippet"],

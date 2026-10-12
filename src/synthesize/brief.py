@@ -58,7 +58,7 @@ def render_markdown(
                     used_urls.add(url)
             cite = "".join(dict.fromkeys(cites)) or ""
             lines.append(f"- {v.verdict} {cite}".rstrip())
-            lines.append(f"  - Confidence: {v.confidence:.2f}. {v.rationale}")
+            lines.append(f"  - Source credibility: {v.confidence:.2f}. {v.rationale}")
             if v.dissent:
                 lines.append(f"  - Dissent: {v.dissent}")
         lines.append("")

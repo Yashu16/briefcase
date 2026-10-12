@@ -49,6 +49,7 @@ Yaswanth (solo).
 - Added six-stage CLI progress output covering ingest, parsing, planning, research, adjudication/citation verification, and brief writing.
 - HTTP request logs remain available for debugging, while the stage lines provide a concise demo-friendly summary.
 - Full suite after the change: 9 tests passed.
+- Web-search evidence is now rewritten into one concise, source-grounded sentence by LiteLLM before it enters the brief; the original snippet remains stored for citation verification. The output label is `Source credibility` to distinguish source priors from claim truth probability.
 
 **Evidence (fill after live runs — do not fabricate dashboard URLs):**
 

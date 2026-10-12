@@ -1,4 +1,4 @@
-from src.research.text import shorten_text
+from src.research.text import shorten_text, summarize_evidence
 
 
 def test_shorten_text_keeps_complete_sentence_when_possible():
@@ -14,3 +14,17 @@ def test_shorten_text_marks_word_boundary_truncation():
 
     assert result.endswith("...")
     assert len(result) <= 40
+
+
+def test_summarize_evidence_uses_grounded_llm_summary(monkeypatch):
+    from src import llm
+
+    monkeypatch.setattr(
+        llm,
+        "complete_text",
+        lambda system, user, max_tokens: "Google builds products used by people worldwide.",
+    )
+
+    assert summarize_evidence("Google builds products for people worldwide.", "What does Google do?") == (
+        "Google builds products used by people worldwide."
+    )

@@ -80,7 +80,7 @@ def adjudicate(evidence: list[Evidence], *, use_priors: bool = True) -> list[Ver
                     rationale=(
                         f"Chose {best.source_name} ({best.source_url}) "
                         + (
-                            f"because credibility prior {best.credibility:.2f} beat alternatives."
+                            f"because source credibility prior {best.credibility:.2f} beat alternatives."
                             if use_priors
                             else "without credibility priors; first/longest snippet in the cluster won."
                         )
