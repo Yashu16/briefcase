@@ -29,17 +29,22 @@ def research_question(
                 question_id=question.id,
             )
         )
-    if question.topic in {Topic.company, Topic.sponsorship, Topic.comp} or question.id == "q1":
+    if question.topic is Topic.company or question.id == "q1":
         payload = enrich_company(posting.company, posting.company_domain)
         if payload and not (isinstance(payload, dict) and payload.get("_error")):
             for row in evidence_from_enrichment(payload, question.id):
+                source_credibility = (
+                    0.88
+                    if use_priors and row["name"].startswith("Crustdata")
+                    else credibility_for_url(row["url"], posting.company_domain, use_priors)
+                )
                 evidence.append(
                     Evidence(
                         claim=row["claim"],
                         source_url=row["url"],
                         source_name=row["name"],
                         snippet=row["snippet"],
-                        credibility=credibility_for_url(row["url"], posting.company_domain, use_priors),
+                        credibility=source_credibility,
                         question_id=question.id,
                     )
                 )

@@ -68,13 +68,14 @@ def evidence_from_enrichment(payload: Any, question_id: str) -> list[dict[str, s
                     }
                 )
             funding = data.get("funding") or {}
-            if funding:
+            funding_claim = _funding_claim(name, funding)
+            if funding_claim:
                 rows.append(
                     {
-                        "claim": shorten_text(f"{name} funding snapshot: {funding}", 240),
+                        "claim": funding_claim,
                         "url": str(url),
-                        "name": "Crustdata",
-                        "snippet": str(funding)[:500],
+                        "name": "Crustdata funding",
+                        "snippet": funding_claim,
                         "question_id": question_id,
                     }
                 )
@@ -83,13 +84,15 @@ def evidence_from_enrichment(payload: Any, question_id: str) -> list[dict[str, s
                 if not isinstance(article, dict):
                     continue
                 nurl = str(article.get("url") or url)
-                title = str(article.get("title") or "news")
+                title = str(article.get("title") or "").strip()
+                if not title:
+                    continue
                 rows.append(
                     {
-                        "claim": title,
+                        "claim": f"{name} news: {title}",
                         "url": nurl,
                         "name": "Crustdata news",
-                        "snippet": title,
+                        "snippet": f"{name} news: {title}",
                         "question_id": question_id,
                     }
                 )
@@ -97,14 +100,47 @@ def evidence_from_enrichment(payload: Any, question_id: str) -> list[dict[str, s
             for key in ("founders", "cxos", "decision_makers"):
                 for person in (people.get(key) or [])[:3]:
                     if isinstance(person, dict):
-                        pname = person.get("name") or person.get("full_name") or "leader"
+                        pname = person.get("name") or person.get("full_name")
+                        if not pname:
+                            continue
+                        title = person.get("current_title") or person.get("headline") or key.replace("_", " ")
                         rows.append(
                             {
-                                "claim": f"{name} {key}: {pname}",
+                                "claim": f"{name} leadership: {pname} ({title})",
                                 "url": str(url),
                                 "name": "Crustdata people",
-                                "snippet": str(person)[:400],
+                                "snippet": f"{pname} ({title})",
                                 "question_id": question_id,
                             }
                         )
     return rows
+
+
+def _funding_claim(name: str, funding: Any) -> str:
+    if not isinstance(funding, dict):
+        return ""
+    acquisitions = funding.get("acquisitions") or []
+    acquisition_names: list[str] = []
+    for acquisition in acquisitions:
+        if not isinstance(acquisition, dict):
+            continue
+        acquired_name = acquisition.get("acquiree_company_name")
+        if acquired_name:
+            date = acquisition.get("date")
+            acquisition_names.append(f"{acquired_name} ({date})" if date else str(acquired_name))
+    if acquisition_names:
+        return shorten_text(
+            f"{name} has acquisition records for {', '.join(acquisition_names[:3])}.",
+            240,
+        )
+
+    investors = funding.get("investors") or []
+    if isinstance(investors, list) and investors:
+        investor_names = [
+            str(investor.get("name") or investor)
+            for investor in investors[:3]
+            if investor
+        ]
+        if investor_names:
+            return shorten_text(f"{name} funding records list investors: {', '.join(investor_names)}.", 240)
+    return ""

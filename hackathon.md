@@ -51,6 +51,13 @@ Yaswanth (solo).
 - Full suite after the change: 9 tests passed.
 - Web-search evidence is now rewritten into one concise, source-grounded sentence by LiteLLM before it enters the brief; the original snippet remains stored for citation verification. The output label is `Source credibility` to distinguish source priors from claim truth probability.
 
+### 2026-10-11 — Crustdata evidence routing and formatting cleanup
+
+- Restricted Crustdata enrichment to the Company research question so funding, news, and leadership records no longer appear in Compensation or Sponsorship sections.
+- Replaced raw funding dictionaries with readable acquisition/investor claims, prefixed news claims with the company name, and skipped records without a named person or news title.
+- Preserved Crustdata provenance for source credibility, including shortened company URLs returned by the service.
+- Live Google rerun produced one readable acquisition finding under Company; unrelated duplicate `news` / `leader` findings were removed. Full suite: 11 tests passed.
+
 **Evidence (fill after live runs — do not fabricate dashboard URLs):**
 
 - neatlogs doctor: local diagnostic capture passed with `NEATLOGS_API_KEY` configured
